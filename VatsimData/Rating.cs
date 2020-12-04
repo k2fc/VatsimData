@@ -13,10 +13,12 @@
 //    along with this program.If not, see<https://www.gnu.org/licenses/>.
 //
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace VatsimData
 {
-    public struct Rating
+    public class Rating
     {
         [JsonProperty("id")]
         public int ID { get; set; }
@@ -28,9 +30,16 @@ namespace VatsimData
         {
             return Short;
         }
+        public List<Controller> Controllers
+        {
+            get
+            {
+                return VatsimData.Data.Controllers.Where(c => c.Rating == this).ToList();
+            }
+        }
     }
 
-    public struct PilotRating
+    public class PilotRating
     {
         [JsonProperty("id")]
         public int ID { get; set; }
@@ -41,6 +50,13 @@ namespace VatsimData
         public override string ToString()
         {
             return Short;
+        }
+        public List<Pilot> Pilots
+        {
+            get
+            {
+                return VatsimData.Data.Pilots.Where(c => c.Rating == this).ToList();
+            }
         }
     }
 }
